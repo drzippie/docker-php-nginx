@@ -8,21 +8,29 @@ WORKDIR /var/www/html
 # Install packages and remove default server definition
 RUN apk add --no-cache \
   curl \
+  git \
   nginx \
   php84 \
+  php84-bcmath \
   php84-ctype \
   php84-curl \
   php84-dom \
   php84-fileinfo \
   php84-fpm \
   php84-gd \
+  php84-iconv \
   php84-intl \
   php84-mbstring \
   php84-mysqli \
   php84-opcache \
   php84-openssl \
+  php84-pdo \
+  php84-pdo_mysql \
+  php84-pdo_pgsql \
+  php84-pgsql \
   php84-phar \
   php84-session \
+  php84-simplexml \
   php84-tokenizer \
   php84-xml \
   php84-xmlreader \
@@ -46,6 +54,9 @@ COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Make sure files/folders needed by the processes are accessable when they run under the nobody user
 RUN chown -R nobody:nobody /var/www/html /run /var/lib/nginx /var/log/nginx
+
+# add composer
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 # Switch to use a non-root user from here on
 USER nobody
