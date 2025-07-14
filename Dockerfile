@@ -31,10 +31,12 @@ RUN apk add --no-cache \
   php84-phar \
   php84-session \
   php84-simplexml \
+  php84-sockets \
   php84-tokenizer \
   php84-xml \
   php84-xmlreader \
   php84-xmlwriter \
+  php84-pecl-swoole \
   supervisor
 
 RUN ln -s /usr/bin/php84 /usr/bin/php
