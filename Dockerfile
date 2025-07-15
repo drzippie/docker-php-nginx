@@ -38,10 +38,20 @@ RUN apk add --no-cache \
   php84-xml \
   php84-xmlreader \
   php84-xmlwriter \
+  php84-zip \
   php84-pecl-swoole \
   supervisor
 
 RUN ln -s /usr/bin/php84 /usr/bin/php
+
+# Set up Composer environment and directories
+ENV COMPOSER_HOME=/.composer
+ENV HOME=/home/nobody
+ENV COMPOSER_CACHE_DIR=/.composer/cache
+
+# Create directories for nobody user
+RUN mkdir -p /home/nobody /.composer /.composer/cache && \
+    chown -R nobody:nobody /home/nobody /.composer
 
 # Configure nginx - http
 COPY config/nginx.conf /etc/nginx/nginx.conf
