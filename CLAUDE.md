@@ -6,6 +6,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a **Docker base image** project that provides a lightweight PHP 8.4 + Nginx 1.26 web server stack on Alpine Linux. The image is designed for production use and follows security best practices. It's optimized for 100 concurrent users with on-demand resource allocation.
 
+**Key Features:**
+- **PHP 8.4** with all essential extensions for modern web development
+- **Swoole 6.0.2** for high-performance async/coroutine applications  
+- **ImageMagick 7.1.1** with PHP Imagick extension for advanced image manipulation
+- **Complete Composer Support** with ZIP extension, writable directories, and global commands
+- **WordPress Ready** with all required extensions and optimized configuration
+- **Security Focused** with non-root execution and hardened configurations
+- **Production Optimized** for 100 concurrent users with efficient resource management
+
 ## Architecture
 
 ### Core Components
@@ -25,6 +34,34 @@ Client → Nginx (port 8080) → PHP-FPM (Unix socket) → Response
 
 ### Multi-Architecture Support
 The image supports AMD64, ARMv6, ARMv7, and ARM64 architectures through Docker Buildx.
+
+### Enhanced Features
+
+**Composer Integration:**
+- Complete Composer 2.8+ support with ZIP extension
+- Writable `.composer` directory with proper permissions
+- Global Composer commands functionality
+- Persistent cache support via volume mounting
+- Environment variables: `COMPOSER_HOME=/.composer`, `COMPOSER_CACHE_DIR=/.composer/cache`
+
+**ImageMagick Integration:**
+- ImageMagick 7.1.1 with PHP Imagick extension 3.8.0
+- Support for 205+ image formats (JPEG, PNG, GIF, TIFF, BMP, WebP, SVG, PDF, etc.)
+- Advanced image processing capabilities for thumbnails, watermarks, format conversion
+- Optimized for WordPress media processing and general image manipulation
+
+**Swoole Integration:**
+- Swoole 6.0.2 for high-performance async/coroutine applications
+- Support for async HTTP servers, WebSocket servers, and task workers
+- Coroutine-based concurrency for improved performance
+- Ideal for real-time applications and APIs
+
+**WordPress Optimization:**
+- All required WordPress PHP extensions included
+- WordPress-optimized Nginx configuration with permalink support
+- Security headers and rate limiting for WordPress admin pages
+- Support for WordPress multisite configurations
+- Integration with MySQL/MariaDB for WordPress database needs
 
 ## Common Development Commands
 
@@ -47,6 +84,19 @@ docker run -p 80:8080 -v ~/my-app:/var/www/html drzippie/php-nginx
 
 # Test specific PHP version response
 curl --silent --fail http://localhost:8080 | grep 'PHP 8.4'
+
+# Test Composer functionality
+docker run --rm drzippie/php-nginx composer --version
+docker run --rm drzippie/php-nginx composer diagnose
+
+# Test ImageMagick functionality
+docker run --rm drzippie/php-nginx php -m | grep imagick
+docker run --rm drzippie/php-nginx convert -version
+
+# WordPress setup example
+docker network create wordpress-net
+docker run -d --name wp-db --network wordpress-net -e MYSQL_DATABASE=wordpress mysql:8.0
+docker run -d --name wordpress --network wordpress-net -p 80:8080 drzippie/php-nginx
 ```
 
 ### Manual Testing
@@ -65,7 +115,11 @@ docker-compose -f docker-compose.test.yml up --build
 ## Key Configuration Files
 
 ### Docker Configuration
-- `Dockerfile`: Main image build definition with PHP 8.4 + essential extensions (including ImageMagick)
+- `Dockerfile`: Main image build definition with PHP 8.4 + comprehensive extensions:
+  * Core: bcmath, ctype, curl, dom, fileinfo, gd, iconv, intl, mbstring, opcache, openssl, pdo, phar, session, simplexml, sockets, tokenizer, xml, xmlreader, xmlwriter, zip
+  * Database: mysqli, pdo_mysql, pdo_pgsql, pgsql  
+  * Advanced: pecl-imagick (ImageMagick), pecl-swoole (async/coroutine), pecl-brotli
+  * Tools: git, curl, imagemagick CLI, supervisor, composer
 - `docker-compose.test.yml`: Test environment setup
 - `run_tests.sh`: Automated test script (checks PHP version response)
 
@@ -133,13 +187,14 @@ The project uses a layered approach where base configurations can be overridden:
 ## Extension Documentation
 
 The `docs/` directory contains guides for common customizations:
-- `imagemagick-support.md`: ImageMagick image manipulation capabilities
-- `composer-support.md`: Adding Composer dependency management
-- `xdebug-support.md`: Enabling Xdebug for development  
-- `enable-https.md`: SSL/HTTPS configuration
-- `sending-emails.md`: Email sending capabilities
-- `real-ip-behind-loadbalancer.md`: Load balancer integration
-- `swoole-support.md`: Swoole async/coroutine PHP framework
+- `wordpress-support.md`: Complete WordPress setup, configuration, and optimization guide
+- `composer-support.md`: Full Composer dependency management with ZIP extension and global commands
+- `imagemagick-support.md`: ImageMagick image manipulation capabilities with 205+ supported formats
+- `swoole-support.md`: Swoole async/coroutine PHP framework for high-performance applications
+- `xdebug-support.md`: Enabling Xdebug for development debugging
+- `enable-https.md`: SSL/HTTPS configuration with Let's Encrypt
+- `sending-emails.md`: Email sending capabilities and SMTP configuration
+- `real-ip-behind-loadbalancer.md`: Load balancer integration and real IP detection
 
 ## Development Workflow
 
@@ -152,6 +207,26 @@ The `docs/` directory contains guides for common customizations:
 - **Multi-stage**: Composer support through multi-stage builds
 - **Package Installation**: Single RUN command for optimal layer caching
 - **Security Focus**: All processes run as `nobody` user
+
+## Supported Use Cases
+
+### Web Applications
+- **WordPress**: Complete WordPress stack with all required extensions, optimized Nginx configuration, and security hardening
+- **Laravel**: Modern PHP framework with Composer support and all required extensions
+- **Symfony**: Full-featured PHP framework with dependency injection and advanced features
+- **Custom PHP Applications**: Any PHP 8.4 application with comprehensive extension support
+
+### Development Workflows
+- **Composer Projects**: Full Composer functionality with ZIP extension and global commands
+- **Modern PHP Development**: PHP 8.4 with all modern extensions and development tools
+- **Image Processing**: ImageMagick for advanced image manipulation and media processing
+- **High-Performance APIs**: Swoole for async/coroutine applications and real-time features
+
+### Production Deployments
+- **Microservices**: Lightweight containers with fast startup times
+- **API Services**: High-performance APIs with Swoole support
+- **Content Management**: WordPress and other CMS platforms
+- **E-commerce**: Applications requiring image processing and database connectivity
 
 ## Image Versioning
 
