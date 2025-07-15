@@ -93,6 +93,26 @@ docker run -d \
   sh -c "composer install --optimize-autoloader && supervisord -c /etc/supervisor/conf.d/supervisord.conf"
 ```
 
+### WordPress Setup
+```bash
+# Complete WordPress stack with database
+docker network create wordpress-net
+
+# MySQL database
+docker run -d --name wp-db --network wordpress-net \
+  -e MYSQL_ROOT_PASSWORD=rootpass \
+  -e MYSQL_DATABASE=wordpress \
+  -e MYSQL_USER=wpuser \
+  -e MYSQL_PASSWORD=wppass \
+  mysql:8.0
+
+# WordPress application
+docker run -d --name wordpress --network wordpress-net \
+  -p 80:8080 \
+  -v wordpress-files:/var/www/html \
+  drzippie/php-nginx
+```
+
 ## Configuration
 
 ### Environment Variables
@@ -125,7 +145,7 @@ The container uses standard PHP and Nginx configurations optimized for productio
 ## Common Use Cases
 
 ### Web Applications
-Perfect for Laravel, Symfony, WordPress, or any PHP application requiring modern PHP features.
+Perfect for Laravel, Symfony, and especially **WordPress** with all required extensions and optimized configuration.
 
 ### Dependency Management
 Complete Composer support with ZIP extension, global commands, and persistent cache for efficient package management.
@@ -167,6 +187,7 @@ curl http://localhost:8080/fmp-ping
 For detailed configuration examples and advanced usage:
 
 - [GitHub Repository](https://github.com/drzippie/docker-php-nginx)
+- [WordPress Support](https://github.com/drzippie/docker-php-nginx/blob/master/docs/wordpress-support.md)
 - [Composer Support](https://github.com/drzippie/docker-php-nginx/blob/master/docs/composer-support.md)
 - [ImageMagick Support](https://github.com/drzippie/docker-php-nginx/blob/master/docs/imagemagick-support.md)
 - [Swoole Support](https://github.com/drzippie/docker-php-nginx/blob/master/docs/swoole-support.md)

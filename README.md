@@ -75,6 +75,7 @@ _Note; Because `-v` requires an absolute path I've added `pwd` in the example to
 ## Documentation and examples
 To modify this container to your specific needs please see the following examples;
 
+* [WordPress support](docs/wordpress-support.md)
 * [Composer support](docs/composer-support.md)
 * [ImageMagick support](docs/imagemagick-support.md)
 * [Swoole support](docs/swoole-support.md)
