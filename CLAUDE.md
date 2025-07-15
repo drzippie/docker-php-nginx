@@ -65,7 +65,7 @@ docker-compose -f docker-compose.test.yml up --build
 ## Key Configuration Files
 
 ### Docker Configuration
-- `Dockerfile`: Main image build definition with PHP 8.4 + essential extensions
+- `Dockerfile`: Main image build definition with PHP 8.4 + essential extensions (including ImageMagick)
 - `docker-compose.test.yml`: Test environment setup
 - `run_tests.sh`: Automated test script (checks PHP version response)
 
@@ -133,6 +133,7 @@ The project uses a layered approach where base configurations can be overridden:
 ## Extension Documentation
 
 The `docs/` directory contains guides for common customizations:
+- `imagemagick-support.md`: ImageMagick image manipulation capabilities
 - `composer-support.md`: Adding Composer dependency management
 - `xdebug-support.md`: Enabling Xdebug for development  
 - `enable-https.md`: SSL/HTTPS configuration

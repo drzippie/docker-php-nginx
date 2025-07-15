@@ -9,6 +9,7 @@ WORKDIR /var/www/html
 RUN apk add --no-cache \
   curl \
   git \
+  imagemagick \
   nginx \
   php84 \
   php84-bcmath \
@@ -27,6 +28,7 @@ RUN apk add --no-cache \
   php84-pdo \
   php84-pdo_mysql \
   php84-pdo_pgsql \
+  php84-pecl-imagick \
   php84-pgsql \
   php84-phar \
   php84-session \
