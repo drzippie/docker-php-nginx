@@ -11,6 +11,7 @@ Original repository: https://github.com/TrafeX/docker-php-nginx
 * Uses PHP 8.4 for the best performance, low CPU usage & memory footprint
 * **Includes Swoole 6.0.2** for high-performance async/coroutine applications
 * **Includes ImageMagick** with PHP Imagick extension for advanced image manipulation
+* **Complete Composer Support** with ZIP extension, writable directories, and global commands
 * Optimized for 100 concurrent users
 * Optimized to only use resources when there's traffic (by using PHP-FPM's `on-demand` process manager)
 * The services Nginx, PHP-FPM and supervisord run under a non-privileged user (nobody) to make it more secure
@@ -28,7 +29,8 @@ This repository is a fork of [TrafeX/docker-php-nginx](https://github.com/TrafeX
 
 * **Swoole Integration**: Added Swoole 6.0.2 for high-performance async/coroutine applications
 * **ImageMagick Support**: Added ImageMagick with PHP Imagick extension for image manipulation
-* **Enhanced Documentation**: Comprehensive guides for Swoole, ImageMagick, and deployment
+* **Complete Composer Support**: Full Composer functionality with ZIP extension and writable directories
+* **Enhanced Documentation**: Comprehensive guides for Swoole, ImageMagick, Composer, and deployment
 * **Manual Deployment**: Streamlined build process without CI/CD automation
 * **Production Focus**: Optimized for production deployment with clear versioning
 
@@ -73,10 +75,10 @@ _Note; Because `-v` requires an absolute path I've added `pwd` in the example to
 ## Documentation and examples
 To modify this container to your specific needs please see the following examples;
 
+* [Composer support](docs/composer-support.md)
 * [ImageMagick support](docs/imagemagick-support.md)
 * [Swoole support](docs/swoole-support.md)
 * [Adding xdebug support](docs/xdebug-support.md)
-* [Adding composer](docs/composer-support.md)
 * [Getting the real IP of the client behind a load balancer](docs/real-ip-behind-loadbalancer.md)
 * [Sending e-mails](docs/sending-emails.md)
 * [Enabling HTTPS/SSL](docs/enable-https.md)

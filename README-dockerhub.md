@@ -16,6 +16,7 @@ Production-ready PHP-FPM 8.4 & Nginx 1.26 container built on Alpine Linux with S
 * **High Performance**: PHP 8.4 with optimized configuration
 * **Swoole Support**: Includes Swoole 6.0.2 for async/coroutine applications
 * **ImageMagick**: Full image manipulation capabilities with PHP Imagick extension
+* **Complete Composer Support**: Full functionality with ZIP extension and writable directories
 * **Production Ready**: Optimized for 100 concurrent users
 * **Security First**: All processes run as non-privileged user (nobody)
 * **Resource Efficient**: Uses PHP-FPM's on-demand process manager
@@ -44,8 +45,8 @@ curl http://localhost/
 ### Extensions & Tools
 - **Swoole 6.0.2**: High-performance async/coroutine framework
 - **ImageMagick 7.1.1**: Advanced image manipulation (205+ formats)
-- **Composer**: Dependency management
-- **Common PHP Extensions**: bcmath, ctype, curl, dom, fileinfo, gd, iconv, intl, mbstring, mysqli, opcache, openssl, pdo, phar, session, simplexml, sockets, tokenizer, xml, xmlreader, xmlwriter
+- **Composer 2.8+**: Complete dependency management with ZIP extension and writable directories
+- **Common PHP Extensions**: bcmath, ctype, curl, dom, fileinfo, gd, iconv, intl, mbstring, mysqli, opcache, openssl, pdo, phar, session, simplexml, sockets, tokenizer, xml, xmlreader, xmlwriter, zip
 
 ## Usage Examples
 
@@ -78,6 +79,18 @@ docker run -d \
   -v /path/to/swoole-app:/var/www/html \
   drzippie/php-nginx \
   php swoole-server.php
+```
+
+### Composer Development
+```bash
+# Install dependencies with persistent cache
+docker run -d \
+  --name composer-app \
+  -p 80:8080 \
+  -v /path/to/app:/var/www/html \
+  -v composer-cache:/.composer \
+  drzippie/php-nginx \
+  sh -c "composer install --optimize-autoloader && supervisord -c /etc/supervisor/conf.d/supervisord.conf"
 ```
 
 ## Configuration
@@ -113,6 +126,9 @@ The container uses standard PHP and Nginx configurations optimized for productio
 
 ### Web Applications
 Perfect for Laravel, Symfony, WordPress, or any PHP application requiring modern PHP features.
+
+### Dependency Management
+Complete Composer support with ZIP extension, global commands, and persistent cache for efficient package management.
 
 ### Image Processing
 Built-in ImageMagick support for thumbnails, watermarks, format conversion, and advanced image manipulation.
@@ -151,6 +167,7 @@ curl http://localhost:8080/fmp-ping
 For detailed configuration examples and advanced usage:
 
 - [GitHub Repository](https://github.com/drzippie/docker-php-nginx)
+- [Composer Support](https://github.com/drzippie/docker-php-nginx/blob/master/docs/composer-support.md)
 - [ImageMagick Support](https://github.com/drzippie/docker-php-nginx/blob/master/docs/imagemagick-support.md)
 - [Swoole Support](https://github.com/drzippie/docker-php-nginx/blob/master/docs/swoole-support.md)
 - [Xdebug Support](https://github.com/drzippie/docker-php-nginx/blob/master/docs/xdebug-support.md)
@@ -167,7 +184,7 @@ MIT License - see [LICENSE](https://github.com/drzippie/docker-php-nginx/blob/ma
 
 ## About
 
-This image is a fork of [TrafeX/docker-php-nginx](https://github.com/TrafeX/docker-php-nginx) with enhanced features for production use including Swoole and ImageMagick support.
+This image is a fork of [TrafeX/docker-php-nginx](https://github.com/TrafeX/docker-php-nginx) with enhanced features for production use including Swoole, ImageMagick, and complete Composer support.
 
 ---
 
