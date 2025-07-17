@@ -28,7 +28,9 @@ RUN apk add --no-cache \
   php84-pdo \
   php84-pdo_mysql \
   php84-pdo_pgsql \
+  php84-pecl-apcu \
   php84-pecl-imagick \
+  php84-pecl-redis \
   php84-pgsql \
   php84-phar \
   php84-session \

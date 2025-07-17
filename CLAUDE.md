@@ -8,6 +8,8 @@ This is a **Docker base image** project that provides a lightweight PHP 8.4 + Ng
 
 **Key Features:**
 - **PHP 8.4** with all essential extensions for modern web development
+- **APCu Support** for in-memory object caching to boost application performance
+- **Redis Support** for distributed caching, session storage, and data structures
 - **Swoole 6.0.2** for high-performance async/coroutine applications  
 - **ImageMagick 7.1.1** with PHP Imagick extension for advanced image manipulation
 - **Complete Composer Support** with ZIP extension, writable directories, and global commands
@@ -93,6 +95,19 @@ docker run --rm drzippie/php-nginx composer diagnose
 docker run --rm drzippie/php-nginx php -m | grep imagick
 docker run --rm drzippie/php-nginx convert -version
 
+# Test APCu functionality
+docker run --rm drzippie/php-nginx php -m | grep apcu
+docker run --rm drzippie/php-nginx php -i | grep apcu
+
+# Test Redis functionality
+docker run --rm drzippie/php-nginx php -m | grep redis
+docker run --rm drzippie/php-nginx php -i | grep redis
+
+# Redis setup example
+docker network create app-net
+docker run -d --name redis --network app-net redis:7-alpine
+docker run -d --name app --network app-net -p 80:8080 drzippie/php-nginx
+
 # WordPress setup example
 docker network create wordpress-net
 docker run -d --name wp-db --network wordpress-net -e MYSQL_DATABASE=wordpress mysql:8.0
@@ -118,7 +133,7 @@ docker-compose -f docker-compose.test.yml up --build
 - `Dockerfile`: Main image build definition with PHP 8.4 + comprehensive extensions:
   * Core: bcmath, ctype, curl, dom, fileinfo, gd, iconv, intl, mbstring, opcache, openssl, pdo, phar, session, simplexml, sockets, tokenizer, xml, xmlreader, xmlwriter, zip
   * Database: mysqli, pdo_mysql, pdo_pgsql, pgsql  
-  * Advanced: pecl-imagick (ImageMagick), pecl-swoole (async/coroutine), pecl-brotli
+  * Advanced: pecl-apcu (in-memory caching), pecl-redis (Redis client), pecl-imagick (ImageMagick), pecl-swoole (async/coroutine), pecl-brotli
   * Tools: git, curl, imagemagick CLI, supervisor, composer
 - `docker-compose.test.yml`: Test environment setup
 - `run_tests.sh`: Automated test script (checks PHP version response)
