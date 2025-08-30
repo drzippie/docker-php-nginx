@@ -84,6 +84,9 @@ docker run -p 80:8080 drzippie/php-nginx
 # Mount custom code for development
 docker run -p 80:8080 -v ~/my-app:/var/www/html drzippie/php-nginx
 
+# Mount Laravel queue worker configuration
+docker run -p 80:8080 -v ~/my-app:/var/www/html -v ~/laravel-queue.conf:/etc/supervisor/conf.d/laravel-queue.conf drzippie/php-nginx
+
 # Test specific PHP version response
 curl --silent --fail http://localhost:8080 | grep 'PHP 8.4'
 
@@ -141,8 +144,9 @@ docker-compose -f docker-compose.test.yml up --build
 ### Server Configuration  
 - `config/nginx.conf`: Main Nginx config with gzip, security headers, logging
 - `config/conf.d/default.conf`: Server block with PHP-FPM integration and routing
-- `config/supervisord.conf`: Process management for nginx + php-fpm
-- `config/fmp-pool.conf`: PHP-FPM pool settings (on-demand scaling, up to 100 workers)
+- `config/supervisord.conf`: Main supervisor config with include directive for loading multiple configuration files
+- `config/supervisor/programs.conf`: Default program definitions (nginx, php-fpm)
+- `config/fpm-pool.conf`: PHP-FPM pool settings (on-demand scaling, up to 100 workers)
 - `config/php.ini`: PHP runtime configuration
 
 ### Application Files
@@ -162,6 +166,9 @@ docker run -v "`pwd`/php-setting.ini:/etc/php84/conf.d/settings.ini" drzippie/ph
 
 # Custom PHP-FPM pool config
 docker run -v "`pwd`/php-fpm-settings.conf:/etc/php84/php-fpm.d/server.conf" drzippie/php-nginx
+
+# Custom supervisor processes (Laravel queue workers, cron jobs, etc.)
+docker run -v "`pwd`/laravel-queue.conf:/etc/supervisor/conf.d/laravel-queue.conf" drzippie/php-nginx
 ```
 
 ### Security Features
@@ -202,6 +209,7 @@ The project uses a layered approach where base configurations can be overridden:
 ## Extension Documentation
 
 The `docs/` directory contains guides for common customizations:
+- `laravel-queue-worker.md`: Complete guide for adding Laravel queue workers using supervisor volume mounts
 - `wordpress-support.md`: Complete WordPress setup, configuration, and optimization guide
 - `composer-support.md`: Full Composer dependency management with ZIP extension and global commands
 - `imagemagick-support.md`: ImageMagick image manipulation capabilities with 205+ supported formats

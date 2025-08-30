@@ -68,13 +68,37 @@ PHP configuration:
 
 PHP-FPM configuration:
 
-    docker run -v "`pwd`/php-fpm-settings.conf:/etc/php84/php-fpm.d/server.conf" drzippie/php-nginx
+    docker run -v "`pwd`/php-fmp-settings.conf:/etc/php84/php-fpm.d/server.conf" drzippie/php-nginx
+
+Supervisor configuration (add custom processes like Laravel queue workers):
+
+    docker run -v "`pwd`/my-worker.conf:/etc/supervisor/conf.d/my-worker.conf" drzippie/php-nginx
 
 _Note; Because `-v` requires an absolute path I've added `pwd` in the example to return the absolute path to the current directory_
+
+## Adding Background Processes
+
+The image now supports adding custom background processes through supervisor configuration files. Simply mount additional `.conf` files to `/etc/supervisor/conf.d/` to add services like Laravel queue workers, cron jobs, or other daemon processes.
+
+Example supervisor configuration for a Laravel queue worker:
+```ini
+[program:laravel-queue]
+command=php /var/www/html/artisan queue:work --sleep=3 --tries=3
+directory=/var/www/html
+user=nobody
+autostart=true
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/dev/stdout
+stdout_logfile_maxbytes=0
+```
+
+See the [Laravel Queue Worker Guide](docs/laravel-queue-worker.md) for detailed examples and best practices.
 
 ## Documentation and examples
 To modify this container to your specific needs please see the following examples;
 
+* [Laravel Queue Worker](docs/laravel-queue-worker.md) - Add background job processing with supervisor
 * [WordPress support](docs/wordpress-support.md)
 * [Composer support](docs/composer-support.md)
 * [ImageMagick support](docs/imagemagick-support.md)
