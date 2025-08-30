@@ -5,9 +5,11 @@
 ![php 8.4](https://img.shields.io/badge/php-8.4-brightgreen.svg)
 ![swoole 6.0.2](https://img.shields.io/badge/swoole-6.0.2-blue.svg)
 ![imagemagick](https://img.shields.io/badge/imagemagick-7.1.1-orange.svg)
+![apcu](https://img.shields.io/badge/apcu-5.1.24-green.svg)
+![redis](https://img.shields.io/badge/redis-6.2.0-red.svg)
 ![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 
-Production-ready PHP-FPM 8.4 & Nginx 1.26 container built on Alpine Linux with Swoole and ImageMagick support.
+Production-ready PHP-FPM 8.4 & Nginx 1.26 container built on Alpine Linux with Swoole, ImageMagick, APCu, and Redis support for enhanced caching capabilities.
 
 ## Features
 
@@ -16,6 +18,8 @@ Production-ready PHP-FPM 8.4 & Nginx 1.26 container built on Alpine Linux with S
 * **High Performance**: PHP 8.4 with optimized configuration
 * **Swoole Support**: Includes Swoole 6.0.2 for async/coroutine applications
 * **ImageMagick**: Full image manipulation capabilities with PHP Imagick extension
+* **APCu Caching**: In-memory object caching for improved performance
+* **Redis Support**: Distributed caching, session storage, and data structures
 * **Complete Composer Support**: Full functionality with ZIP extension and writable directories
 * **Production Ready**: Optimized for 100 concurrent users
 * **Security First**: All processes run as non-privileged user (nobody)
@@ -45,6 +49,8 @@ curl http://localhost/
 ### Extensions & Tools
 - **Swoole 6.0.2**: High-performance async/coroutine framework
 - **ImageMagick 7.1.1**: Advanced image manipulation (205+ formats)
+- **APCu 5.1.24**: In-memory object caching with 32MB shared memory
+- **Redis 6.2.0**: Distributed caching client with connection pooling
 - **Composer 2.8+**: Complete dependency management with ZIP extension and writable directories
 - **Common PHP Extensions**: bcmath, ctype, curl, dom, fileinfo, gd, iconv, intl, mbstring, mysqli, opcache, openssl, pdo, phar, session, simplexml, sockets, tokenizer, xml, xmlreader, xmlwriter, zip
 
@@ -93,9 +99,32 @@ docker run -d \
   sh -c "composer install --optimize-autoloader && supervisord -c /etc/supervisor/conf.d/supervisord.conf"
 ```
 
+### Caching Applications
+```bash
+# APCu caching (in-memory object cache)
+docker run -d \
+  --name apcu-app \
+  -p 80:8080 \
+  -v /path/to/app:/var/www/html \
+  drzippie/php-nginx
+
+# Redis caching setup
+docker network create app-net
+
+# Redis server
+docker run -d --name redis --network app-net \
+  redis:7-alpine
+
+# Application with Redis
+docker run -d --name app --network app-net \
+  -p 80:8080 \
+  -v /path/to/app:/var/www/html \
+  drzippie/php-nginx
+```
+
 ### WordPress Setup
 ```bash
-# Complete WordPress stack with database
+# Complete WordPress stack with database and Redis
 docker network create wordpress-net
 
 # MySQL database
@@ -105,6 +134,10 @@ docker run -d --name wp-db --network wordpress-net \
   -e MYSQL_USER=wpuser \
   -e MYSQL_PASSWORD=wppass \
   mysql:8.0
+
+# Redis for object caching
+docker run -d --name wp-redis --network wordpress-net \
+  redis:7-alpine
 
 # WordPress application
 docker run -d --name wordpress --network wordpress-net \
@@ -134,6 +167,8 @@ The container uses standard PHP and Nginx configurations optimized for productio
 - **Worker Recycling**: Prevents memory leaks with request limits
 - **Gzip Compression**: Optimized for web assets
 - **OPcache**: Enabled for PHP bytecode caching
+- **APCu Cache**: 32MB shared memory for object caching
+- **Redis Pooling**: Connection pooling for distributed caching
 - **Resource Limits**: Configured for 100 concurrent users
 
 ### Security Features
@@ -149,6 +184,10 @@ Perfect for Laravel, Symfony, and especially **WordPress** with all required ext
 
 ### Dependency Management
 Complete Composer support with ZIP extension, global commands, and persistent cache for efficient package management.
+
+### Caching Solutions
+- **APCu**: In-memory object caching for single-server deployments
+- **Redis**: Distributed caching for multi-server applications, session storage, and data structures
 
 ### Image Processing
 Built-in ImageMagick support for thumbnails, watermarks, format conversion, and advanced image manipulation.
