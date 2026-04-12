@@ -89,4 +89,4 @@ EXPOSE 8080
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
 
 # Configure a healthcheck to validate that everything is up&running
-HEALTHCHECK --timeout=10s CMD curl --silent --fail http://127.0.0.1:8080/fpm-ping || exit 1
+HEALTHCHECK --interval=10s --timeout=3s --start-period=5s --retries=3 CMD curl --silent --fail http://127.0.0.1:8080/fpm-ping || exit 1
