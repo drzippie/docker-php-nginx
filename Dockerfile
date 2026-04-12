@@ -16,6 +16,7 @@ RUN apk add --no-cache \
   php84-ctype \
   php84-curl \
   php84-dom \
+  php84-exif \
   php84-fileinfo \
   php84-fpm \
   php84-gd \

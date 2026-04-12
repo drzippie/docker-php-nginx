@@ -134,7 +134,7 @@ docker-compose -f docker-compose.test.yml up --build
 
 ### Docker Configuration
 - `Dockerfile`: Main image build definition with PHP 8.4 + comprehensive extensions:
-  * Core: bcmath, ctype, curl, dom, fileinfo, gd, iconv, intl, mbstring, opcache, openssl, pdo, phar, session, simplexml, sockets, tokenizer, xml, xmlreader, xmlwriter, zip
+  * Core: bcmath, ctype, curl, dom, exif, fileinfo, gd, iconv, intl, mbstring, opcache, openssl, pdo, phar, session, simplexml, sockets, tokenizer, xml, xmlreader, xmlwriter, zip
   * Database: mysqli, pdo_mysql, pdo_pgsql, pgsql  
   * Advanced: pecl-apcu (in-memory caching), pecl-redis (Redis client), pecl-imagick (ImageMagick), pecl-swoole (async/coroutine), pecl-brotli
   * Tools: git, curl, imagemagick CLI, supervisor, composer

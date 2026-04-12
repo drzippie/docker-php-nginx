@@ -52,7 +52,7 @@ curl http://localhost/
 - **APCu 5.1.24**: In-memory object caching with 32MB shared memory
 - **Redis 6.2.0**: Distributed caching client with connection pooling
 - **Composer 2.8+**: Complete dependency management with ZIP extension and writable directories
-- **Common PHP Extensions**: bcmath, ctype, curl, dom, fileinfo, gd, iconv, intl, mbstring, mysqli, opcache, openssl, pdo, phar, session, simplexml, sockets, tokenizer, xml, xmlreader, xmlwriter, zip
+- **Common PHP Extensions**: bcmath, ctype, curl, dom, exif, fileinfo, gd, iconv, intl, mbstring, mysqli, opcache, openssl, pdo, phar, session, simplexml, sockets, tokenizer, xml, xmlreader, xmlwriter, zip
 
 ## Usage Examples
 
