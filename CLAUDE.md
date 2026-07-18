@@ -134,10 +134,10 @@ docker-compose -f docker-compose.test.yml up --build
 
 ### Docker Configuration
 - `Dockerfile`: Main image build definition with PHP 8.4 + comprehensive extensions:
-  * Core: bcmath, ctype, curl, dom, exif, fileinfo, gd, iconv, intl, mbstring, opcache, openssl, pdo, phar, session, simplexml, sockets, tokenizer, xml, xmlreader, xmlwriter, zip
-  * Database: mysqli, pdo_mysql, pdo_pgsql, pgsql  
-  * Advanced: pecl-apcu (in-memory caching), pecl-redis (Redis client), pecl-imagick (ImageMagick), pecl-swoole (async/coroutine), pecl-brotli
-  * Tools: git, curl, imagemagick CLI, supervisor, composer
+  * Core: bcmath, ctype, curl, dom, exif, fileinfo, gd, iconv, intl, mbstring, opcache, openssl, pdo, phar, session, simplexml, sockets, tidy, tokenizer, xml, xmlreader, xmlwriter, zip
+  * Database: mysqli, pdo_mysql, pdo_pgsql, pdo_sqlite, pgsql  
+  * Advanced: pecl-apcu (in-memory caching), pecl-redis (Redis client), pecl-imagick (ImageMagick), pecl-swoole (async/coroutine), pecl-brotli, pecl-xdebug (installed but disabled by default)
+  * Tools: git, curl, imagemagick CLI, nodejs 22 + npm, supervisor, composer
 - `docker-compose.test.yml`: Test environment setup
 - `run_tests.sh`: Automated test script (checks PHP version response)
 

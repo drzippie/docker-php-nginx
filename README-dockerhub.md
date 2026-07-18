@@ -9,17 +9,20 @@
 ![redis](https://img.shields.io/badge/redis-6.2.0-red.svg)
 ![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 
-Production-ready PHP-FPM 8.4 & Nginx 1.26 container built on Alpine Linux with Swoole, ImageMagick, APCu, and Redis support for enhanced caching capabilities.
+Production-ready PHP-FPM 8.4 & Nginx 1.26 container built on Alpine Linux with Node.js 22, Swoole, ImageMagick, APCu, and Redis support for enhanced caching capabilities.
 
 ## Features
 
 * **Lightweight**: Built on Alpine Linux (~50MB total image size)
 * **Multi-platform**: Supports AMD64, ARMv6, ARMv7, ARM64
 * **High Performance**: PHP 8.4 with optimized configuration
+* **Node.js 22 + npm**: For asset building and JS tooling alongside PHP
 * **Swoole Support**: Includes Swoole 6.0.2 for async/coroutine applications
 * **ImageMagick**: Full image manipulation capabilities with PHP Imagick extension
 * **APCu Caching**: In-memory object caching for improved performance
 * **Redis Support**: Distributed caching, session storage, and data structures
+* **SQLite Support**: PDO SQLite driver for lightweight/embedded databases
+* **Xdebug Ready**: Installed but disabled by default — enable via a mounted ini
 * **Complete Composer Support**: Full functionality with ZIP extension and writable directories
 * **Production Ready**: Optimized for 100 concurrent users
 * **Security First**: All processes run as non-privileged user (nobody)
@@ -47,12 +50,14 @@ curl http://localhost/
 - **Supervisord**: Process supervisor managing all services
 
 ### Extensions & Tools
+- **Node.js 22 + npm**: JavaScript runtime and package manager for asset pipelines
 - **Swoole 6.0.2**: High-performance async/coroutine framework
 - **ImageMagick 7.1.1**: Advanced image manipulation (205+ formats)
 - **APCu 5.1.24**: In-memory object caching with 32MB shared memory
 - **Redis 6.2.0**: Distributed caching client with connection pooling
+- **Xdebug**: Installed but disabled by default (enable via a mounted ini)
 - **Composer 2.8+**: Complete dependency management with ZIP extension and writable directories
-- **Common PHP Extensions**: bcmath, ctype, curl, dom, exif, fileinfo, gd, iconv, intl, mbstring, mysqli, opcache, openssl, pdo, phar, session, simplexml, sockets, tokenizer, xml, xmlreader, xmlwriter, zip
+- **Common PHP Extensions**: bcmath, ctype, curl, dom, exif, fileinfo, gd, iconv, intl, mbstring, mysqli, opcache, openssl, pdo, pdo_mysql, pdo_pgsql, pdo_sqlite, phar, session, simplexml, sockets, tidy, tokenizer, xml, xmlreader, xmlwriter, zip
 
 ## Usage Examples
 

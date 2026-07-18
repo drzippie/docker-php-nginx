@@ -1,6 +1,12 @@
-# Adding xdebug support
+# Enabling Xdebug
 
-Create the following file `xdebug.ini`
+Xdebug is **already installed** in the base image but **disabled by default** (it
+adds overhead you don't want in production). To enable it you only need to add an
+Xdebug ini file into the PHP config directory — no need to install anything.
+
+## Enable via a mounted config
+
+Create the following file `xdebug.ini`:
 
 ```ini
 zend_extension=xdebug.so
@@ -18,20 +24,22 @@ xdebug.client_host=host.docker.internal
 xdebug.client_port=9003
 ```
 
-Create a new image with the following `Dockerfile`
+Mount it at runtime:
+
+```bash
+docker run -p 80:8080 \
+  -v "$(pwd)/xdebug.ini:/etc/php84/conf.d/xdebug.ini" \
+  drzippie/php-nginx
+```
+
+## Enable in a derived image
 
 ```Dockerfile
-FROM trafex/php-nginx:latest
+FROM drzippie/php-nginx:latest
 
-# Temporary switch to root
-USER root
-
-# Install xdebug
-RUN apk add --no-cache php84-pecl-xdebug
-
-# Add configuration
+# Add Xdebug configuration (the extension is already present in the base image)
 COPY xdebug.ini ${PHP_INI_DIR}/conf.d/xdebug.ini
-
-# Switch back to non-root user
-USER nobody
 ```
+
+> Note: the base image ships the package's default loader renamed to
+> `50_xdebug.ini.disabled` so Xdebug stays off until you supply your own ini.

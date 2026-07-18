@@ -11,6 +11,8 @@ RUN apk add --no-cache \
   git \
   imagemagick \
   nginx \
+  nodejs \
+  npm \
   php84 \
   php84-bcmath \
   php84-ctype \
@@ -29,14 +31,17 @@ RUN apk add --no-cache \
   php84-pdo \
   php84-pdo_mysql \
   php84-pdo_pgsql \
+  php84-pdo_sqlite \
   php84-pecl-apcu \
   php84-pecl-imagick \
   php84-pecl-redis \
+  php84-pecl-xdebug \
   php84-pgsql \
   php84-phar \
   php84-session \
   php84-simplexml \
   php84-sockets \
+  php84-tidy \
   php84-tokenizer \
   php84-xml \
   php84-xmlreader \
@@ -46,6 +51,11 @@ RUN apk add --no-cache \
   supervisor
 
 RUN ln -s /usr/bin/php84 /usr/bin/php
+
+# Disable Xdebug by default (the package auto-loads it). It ships installed but
+# inactive: mount an ini into ${PHP_INI_DIR}/conf.d/ to enable it. See docs/xdebug-support.md
+RUN find /etc/php84/conf.d -name '*xdebug*.ini' -exec sh -c \
+    'mv "$1" "${1}.disabled"' _ {} \;
 
 # Set up Composer environment and directories
 ENV COMPOSER_HOME=/.composer
@@ -62,7 +72,7 @@ COPY config/nginx.conf /etc/nginx/nginx.conf
 COPY config/conf.d /etc/nginx/conf.d/
 
 # Configure PHP-FPM
-ENV PHP_INI_DIR /etc/php84
+ENV PHP_INI_DIR=/etc/php84
 COPY config/fpm-pool.conf ${PHP_INI_DIR}/php-fpm.d/www.conf
 COPY config/php.ini ${PHP_INI_DIR}/conf.d/custom.ini
 
