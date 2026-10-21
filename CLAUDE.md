@@ -4,14 +4,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a **Docker base image** project that provides a lightweight PHP 8.4 + Nginx 1.26 web server stack on Alpine Linux. The image is designed for production use and follows security best practices. It's optimized for 100 concurrent users with on-demand resource allocation.
+This is a **Docker base image** project that provides a lightweight PHP 8.4 + Nginx 1.30 web server stack on Alpine Linux. The image is designed for production use and follows security best practices. It's optimized for 100 concurrent users with on-demand resource allocation.
 
 **Key Features:**
 - **PHP 8.4** with all essential extensions for modern web development
 - **APCu Support** for in-memory object caching to boost application performance
 - **Redis Support** for distributed caching, session storage, and data structures
-- **Swoole 6.0.2** for high-performance async/coroutine applications  
-- **ImageMagick 7.1.1** with PHP Imagick extension for advanced image manipulation
+- **Swoole 6.2.2** for high-performance async/coroutine applications  
+- **ImageMagick 7.1.2** with PHP Imagick extension for advanced image manipulation
 - **Complete Composer Support** with ZIP extension, writable directories, and global commands
 - **WordPress Ready** with all required extensions and optimized configuration
 - **Security Focused** with non-root execution and hardened configurations
@@ -20,10 +20,10 @@ This is a **Docker base image** project that provides a lightweight PHP 8.4 + Ng
 ## Architecture
 
 ### Core Components
-- **Nginx 1.26**: Web server listening on port 8080 (non-privileged)
+- **Nginx 1.30**: Web server listening on port 8080 (non-privileged)
 - **PHP 8.4 + PHP-FPM**: Process manager with on-demand scaling (0-100 workers)
 - **Supervisord**: Process supervisor managing both services as PID 1
-- **Alpine Linux 3.21**: Minimal base OS (~40MB total image size)
+- **Alpine Linux 3.24**: Minimal base OS (~40MB total image size)
 
 ### Process Communication Flow
 ```
@@ -47,13 +47,13 @@ The image supports AMD64, ARMv6, ARMv7, and ARM64 architectures through Docker B
 - Environment variables: `COMPOSER_HOME=/.composer`, `COMPOSER_CACHE_DIR=/.composer/cache`
 
 **ImageMagick Integration:**
-- ImageMagick 7.1.1 with PHP Imagick extension 3.8.0
+- ImageMagick 7.1.2 with PHP Imagick extension 3.8.1
 - Support for 205+ image formats (JPEG, PNG, GIF, TIFF, BMP, WebP, SVG, PDF, etc.)
 - Advanced image processing capabilities for thumbnails, watermarks, format conversion
 - Optimized for WordPress media processing and general image manipulation
 
 **Swoole Integration:**
-- Swoole 6.0.2 for high-performance async/coroutine applications
+- Swoole 6.2.2 for high-performance async/coroutine applications
 - Support for async HTTP servers, WebSocket servers, and task workers
 - Coroutine-based concurrency for improved performance
 - Ideal for real-time applications and APIs
@@ -137,7 +137,7 @@ docker-compose -f docker-compose.test.yml up --build
   * Core: bcmath, ctype, curl, dom, exif, fileinfo, gd, iconv, intl, mbstring, opcache, openssl, pdo, phar, session, simplexml, sockets, tidy, tokenizer, xml, xmlreader, xmlwriter, zip
   * Database: mysqli, pdo_mysql, pdo_pgsql, pdo_sqlite, pgsql  
   * Advanced: pecl-apcu (in-memory caching), pecl-redis (Redis client), pecl-imagick (ImageMagick), pecl-swoole (async/coroutine), pecl-brotli, pecl-xdebug (installed but disabled by default)
-  * Tools: git, curl, imagemagick CLI, nodejs 22 + npm, supervisor, composer
+  * Tools: git, curl, imagemagick CLI, nodejs 24 + npm, supervisor, composer
 - `docker-compose.test.yml`: Test environment setup
 - `run_tests.sh`: Automated test script (checks PHP version response)
 

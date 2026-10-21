@@ -1,5 +1,5 @@
-# Docker PHP-FPM 8.4 & Nginx 1.26 on Alpine Linux
-PHP-FPM 8.4 & Nginx 1.26 container image for Docker, built on [Alpine Linux](https://www.alpinelinux.org/) with Swoole support.
+# Docker PHP-FPM 8.4 & Nginx 1.30 on Alpine Linux
+PHP-FPM 8.4 & Nginx 1.30 container image for Docker, built on [Alpine Linux](https://www.alpinelinux.org/) with Swoole support.
 
 Repository: https://github.com/drzippie/docker-php-nginx  
 Original repository: https://github.com/TrafeX/docker-php-nginx
@@ -9,7 +9,7 @@ Original repository: https://github.com/TrafeX/docker-php-nginx
 * Multi-platform, supporting AMD64, ARMv6, ARMv7, ARM64
 * Very small Docker image size (+/-40MB)
 * Uses PHP 8.4 for the best performance, low CPU usage & memory footprint
-* **Includes Swoole 6.0.2** for high-performance async/coroutine applications
+* **Includes Swoole 6.2.2** for high-performance async/coroutine applications
 * **Includes ImageMagick** with PHP Imagick extension for advanced image manipulation
 * **Complete Composer Support** with ZIP extension, writable directories, and global commands
 * Optimized for 100 concurrent users
@@ -19,15 +19,15 @@ Original repository: https://github.com/TrafeX/docker-php-nginx
 * Follows the KISS principle (Keep It Simple, Stupid) to make it easy to understand and adjust the image to your needs
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/drzippie/php-nginx.svg)](https://hub.docker.com/r/drzippie/php-nginx/)
-![nginx 1.26](https://img.shields.io/badge/nginx-1.26-brightgreen.svg)
+![nginx 1.30](https://img.shields.io/badge/nginx-1.30-brightgreen.svg)
 ![php 8.4](https://img.shields.io/badge/php-8.4-brightgreen.svg)
-![swoole 6.0.2](https://img.shields.io/badge/swoole-6.0.2-blue.svg)
+![swoole 6.2.2](https://img.shields.io/badge/swoole-6.2.2-blue.svg)
 ![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 
 ## About this fork
 This repository is a fork of [TrafeX/docker-php-nginx](https://github.com/TrafeX/docker-php-nginx) with the following enhancements:
 
-* **Swoole Integration**: Added Swoole 6.0.2 for high-performance async/coroutine applications
+* **Swoole Integration**: Added Swoole 6.2.2 for high-performance async/coroutine applications
 * **ImageMagick Support**: Added ImageMagick with PHP Imagick extension for image manipulation
 * **Complete Composer Support**: Full Composer functionality with ZIP extension and writable directories
 * **Enhanced Documentation**: Comprehensive guides for Swoole, ImageMagick, Composer, and deployment

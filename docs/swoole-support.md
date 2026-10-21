@@ -6,7 +6,7 @@ Swoole is a high-performance, event-driven asynchronous and concurrent networkin
 
 ## Features
 
-The Docker image includes Swoole 6.0.2 with the following capabilities:
+The Docker image includes Swoole 6.2.2 with the following capabilities:
 
 - **Asynchronous Programming**: Non-blocking I/O and coroutines
 - **WebSocket Server**: Built-in WebSocket protocol support

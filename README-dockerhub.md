@@ -1,23 +1,23 @@
-# Docker PHP-FPM 8.4 & Nginx 1.26 on Alpine Linux
+# Docker PHP-FPM 8.4 & Nginx 1.30 on Alpine Linux
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/drzippie/php-nginx.svg)](https://hub.docker.com/r/drzippie/php-nginx/)
-![nginx 1.26](https://img.shields.io/badge/nginx-1.26-brightgreen.svg)
+![nginx 1.30](https://img.shields.io/badge/nginx-1.30-brightgreen.svg)
 ![php 8.4](https://img.shields.io/badge/php-8.4-brightgreen.svg)
-![swoole 6.0.2](https://img.shields.io/badge/swoole-6.0.2-blue.svg)
-![imagemagick](https://img.shields.io/badge/imagemagick-7.1.1-orange.svg)
+![swoole 6.2.2](https://img.shields.io/badge/swoole-6.2.2-blue.svg)
+![imagemagick](https://img.shields.io/badge/imagemagick-7.1.2-orange.svg)
 ![apcu](https://img.shields.io/badge/apcu-5.1.24-green.svg)
 ![redis](https://img.shields.io/badge/redis-6.2.0-red.svg)
 ![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 
-Production-ready PHP-FPM 8.4 & Nginx 1.26 container built on Alpine Linux with Node.js 22, Swoole, ImageMagick, APCu, and Redis support for enhanced caching capabilities.
+Production-ready PHP-FPM 8.4 & Nginx 1.30 container built on Alpine Linux with Node.js 24, Swoole, ImageMagick, APCu, and Redis support for enhanced caching capabilities.
 
 ## Features
 
 * **Lightweight**: Built on Alpine Linux (~50MB total image size)
 * **Multi-platform**: Supports AMD64, ARMv6, ARMv7, ARM64
 * **High Performance**: PHP 8.4 with optimized configuration
-* **Node.js 22 + npm**: For asset building and JS tooling alongside PHP
-* **Swoole Support**: Includes Swoole 6.0.2 for async/coroutine applications
+* **Node.js 24 + npm**: For asset building and JS tooling alongside PHP
+* **Swoole Support**: Includes Swoole 6.2.2 for async/coroutine applications
 * **ImageMagick**: Full image manipulation capabilities with PHP Imagick extension
 * **APCu Caching**: In-memory object caching for improved performance
 * **Redis Support**: Distributed caching, session storage, and data structures
@@ -44,15 +44,15 @@ curl http://localhost/
 ## What's Included
 
 ### Core Components
-- **Nginx 1.26**: High-performance web server
+- **Nginx 1.30**: High-performance web server
 - **PHP 8.4**: Latest PHP with optimal performance
 - **PHP-FPM**: Process manager with on-demand scaling
 - **Supervisord**: Process supervisor managing all services
 
 ### Extensions & Tools
-- **Node.js 22 + npm**: JavaScript runtime and package manager for asset pipelines
-- **Swoole 6.0.2**: High-performance async/coroutine framework
-- **ImageMagick 7.1.1**: Advanced image manipulation (205+ formats)
+- **Node.js 24 + npm**: JavaScript runtime and package manager for asset pipelines
+- **Swoole 6.2.2**: High-performance async/coroutine framework
+- **ImageMagick 7.1.2**: Advanced image manipulation (205+ formats)
 - **APCu 5.1.24**: In-memory object caching with 32MB shared memory
 - **Redis 6.2.0**: Distributed caching client with connection pooling
 - **Xdebug**: Installed but disabled by default (enable via a mounted ini)

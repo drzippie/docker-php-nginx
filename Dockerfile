@@ -1,12 +1,48 @@
-ARG ALPINE_VERSION=3.21
+ARG ALPINE_VERSION=3.24
+# Where the php84 packages come from: "alpine" (official repo, default) or
+# "build" (compile PHP_VERSION ourselves with Alpine's APKBUILD, for urgent
+# security releases not yet packaged by Alpine). Example:
+#   docker buildx build --build-arg PHP_SOURCE=build \
+#     --build-arg PHP_VERSION=8.4.27 --build-arg PHP_SHA256=<sha256 from php.net> .
+ARG PHP_SOURCE=alpine
+
+FROM alpine:${ALPINE_VERSION} AS php-pkgs-alpine
+RUN mkdir -p /packages /keys
+
+FROM alpine:${ALPINE_VERSION} AS php-pkgs-build
+ARG ALPINE_VERSION
+ARG PHP_VERSION
+ARG PHP_SHA256
+RUN test -n "$PHP_VERSION" && test -n "$PHP_SHA256" && \
+    apk add --no-cache alpine-sdk curl && \
+    abuild-keygen -a -n && \
+    mkdir -p /keys && cp ~/.abuild/*.rsa.pub /keys/ && cp /keys/* /etc/apk/keys/
+WORKDIR /aports
+RUN curl -fsSL "https://gitlab.alpinelinux.org/alpine/aports/-/archive/${ALPINE_VERSION}-stable/aports.tar.gz?path=community/php84" \
+    | tar -xz --strip-components=1
+WORKDIR /aports/community/php84
+# pkgrel=100 makes our build win over the same version in the official repo
+RUN sed -i -e "s/^pkgver=.*/pkgver=${PHP_VERSION}/" -e 's/^pkgrel=.*/pkgrel=100/' \
+      -e '/^pkgrel=/a options="!check"' APKBUILD && \
+    export SRCDEST=/distfiles REPODEST=/packages && \
+    abuild -F checksum && \
+    echo "${PHP_SHA256}  /distfiles/php-${PHP_VERSION}.tar.xz" | sha256sum -c - && \
+    apk update && abuild -F -r
+
+FROM php-pkgs-${PHP_SOURCE} AS php-pkgs
+
 FROM alpine:${ALPINE_VERSION}
 LABEL Maintainer="Tim de Pater <code@trafex.nl>"
-LABEL Description="Lightweight container with Nginx 1.26 & PHP 8.4 based on Alpine Linux."
+LABEL Description="Lightweight container with Nginx 1.30 & PHP 8.4 based on Alpine Linux."
 # Setup document root
 WORKDIR /var/www/html
 
 # Install packages and remove default server definition
-RUN apk add --no-cache \
+# (php84 packages built in php-pkgs take precedence when PHP_SOURCE=build)
+RUN --mount=type=bind,from=php-pkgs,source=/,target=/php-pkgs \
+  cp /php-pkgs/keys/* /etc/apk/keys/ 2>/dev/null; \
+  REPO=""; [ -d /php-pkgs/packages/community ] && REPO="--repository /php-pkgs/packages/community"; \
+  apk add --no-cache $REPO \
   curl \
   git \
   imagemagick \
