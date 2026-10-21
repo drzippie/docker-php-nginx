@@ -2,14 +2,16 @@
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/drzippie/php-nginx.svg)](https://hub.docker.com/r/drzippie/php-nginx/)
 ![nginx 1.30](https://img.shields.io/badge/nginx-1.30-brightgreen.svg)
-![php 8.4](https://img.shields.io/badge/php-8.4-brightgreen.svg)
+![php 8.4.27](https://img.shields.io/badge/php-8.4.27-brightgreen.svg)
 ![swoole 6.2.2](https://img.shields.io/badge/swoole-6.2.2-blue.svg)
 ![imagemagick](https://img.shields.io/badge/imagemagick-7.1.2-orange.svg)
-![apcu](https://img.shields.io/badge/apcu-5.1.24-green.svg)
-![redis](https://img.shields.io/badge/redis-6.2.0-red.svg)
+![apcu](https://img.shields.io/badge/apcu-5.1.28-green.svg)
+![redis](https://img.shields.io/badge/redis-6.3.0-red.svg)
 ![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 
 Production-ready PHP-FPM 8.4 & Nginx 1.30 container built on Alpine Linux with Node.js 24, Swoole, ImageMagick, APCu, and Redis support for enhanced caching capabilities.
+
+> **Security update (2026-10-21):** `latest` and `2026-10-21` ship **PHP 8.4.27**, which fixes the critical unauthenticated RCE vulnerabilities CVE-2026-109618 and CVE-2026-109619. All earlier tags (PHP 8.4.14 on Alpine 3.21) are vulnerable — pull the new image and recreate your containers.
 
 ## Features
 
@@ -45,7 +47,7 @@ curl http://localhost/
 
 ### Core Components
 - **Nginx 1.30**: High-performance web server
-- **PHP 8.4**: Latest PHP with optimal performance
+- **PHP 8.4.27**: Latest PHP 8.4 security release
 - **PHP-FPM**: Process manager with on-demand scaling
 - **Supervisord**: Process supervisor managing all services
 
@@ -53,10 +55,10 @@ curl http://localhost/
 - **Node.js 24 + npm**: JavaScript runtime and package manager for asset pipelines
 - **Swoole 6.2.2**: High-performance async/coroutine framework
 - **ImageMagick 7.1.2**: Advanced image manipulation (205+ formats)
-- **APCu 5.1.24**: In-memory object caching with 32MB shared memory
-- **Redis 6.2.0**: Distributed caching client with connection pooling
+- **APCu 5.1.28**: In-memory object caching with 32MB shared memory
+- **Redis 6.3.0**: Distributed caching client with connection pooling
 - **Xdebug**: Installed but disabled by default (enable via a mounted ini)
-- **Composer 2.8+**: Complete dependency management with ZIP extension and writable directories
+- **Composer 2.10+**: Complete dependency management with ZIP extension and writable directories
 - **Common PHP Extensions**: bcmath, ctype, curl, dom, exif, fileinfo, gd, iconv, intl, mbstring, mysqli, opcache, openssl, pdo, pdo_mysql, pdo_pgsql, pdo_sqlite, phar, session, simplexml, sockets, tidy, tokenizer, xml, xmlreader, xmlwriter, zip
 
 ## Usage Examples
@@ -242,6 +244,13 @@ For detailed configuration examples and advanced usage:
 
 - `latest` - Latest stable release
 - `YYYY-MM-DD` - Date-based tags for specific versions
+
+| Tag | PHP | Alpine | Notes |
+|---|---|---|---|
+| `latest`, `2026-10-21` | 8.4.27 | 3.24 | Fixes CVE-2026-109618 / CVE-2026-109619 |
+| `2026-07-18` | 8.4.14 | 3.21 | Vulnerable — do not use |
+
+Check the PHP version of any image with `docker run --rm drzippie/php-nginx php -v`.
 
 ## License
 
