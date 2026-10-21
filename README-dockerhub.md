@@ -15,8 +15,8 @@ Production-ready PHP-FPM 8.4 & Nginx 1.30 container built on Alpine Linux with N
 
 ## Features
 
-* **Lightweight**: Built on Alpine Linux (~50MB total image size)
-* **Multi-platform**: Supports AMD64, ARMv6, ARMv7, ARM64
+* **Alpine-based**: Built on Alpine Linux (~85MB compressed download, ~230MB on disk)
+* **Multi-platform**: Supports AMD64 and ARM64
 * **High Performance**: PHP 8.4 with optimized configuration
 * **Node.js 24 + npm**: For asset building and JS tooling alongside PHP
 * **Swoole Support**: Includes Swoole 6.2.2 for async/coroutine applications

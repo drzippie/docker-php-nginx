@@ -18,7 +18,7 @@ RUN test -n "$PHP_VERSION" && test -n "$PHP_SHA256" && \
     abuild-keygen -a -n && \
     mkdir -p /keys && cp ~/.abuild/*.rsa.pub /keys/ && cp /keys/* /etc/apk/keys/
 WORKDIR /aports
-RUN curl -fsSL "https://gitlab.alpinelinux.org/alpine/aports/-/archive/${ALPINE_VERSION}-stable/aports.tar.gz?path=community/php84" \
+RUN curl -fsSL --retry 5 --retry-all-errors --retry-delay 10 "https://gitlab.alpinelinux.org/alpine/aports/-/archive/${ALPINE_VERSION}-stable/aports.tar.gz?path=community/php84" \
     | tar -xz --strip-components=1
 WORKDIR /aports/community/php84
 # pkgrel=100 makes our build win over the same version in the official repo

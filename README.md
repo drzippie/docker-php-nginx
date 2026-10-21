@@ -6,8 +6,8 @@ Original repository: https://github.com/TrafeX/docker-php-nginx
 
 
 * Built on the lightweight and secure Alpine Linux distribution
-* Multi-platform, supporting AMD64, ARMv6, ARMv7, ARM64
-* Very small Docker image size (+/-40MB)
+* Multi-platform, supporting AMD64 and ARM64
+* Image size ~85MB compressed (~230MB on disk), including Node.js, ImageMagick and Swoole
 * Uses PHP 8.4 for the best performance, low CPU usage & memory footprint
 * **Includes Swoole 6.2.2** for high-performance async/coroutine applications
 * **Includes ImageMagick** with PHP Imagick extension for advanced image manipulation

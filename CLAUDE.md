@@ -23,7 +23,7 @@ This is a **Docker base image** project that provides a lightweight PHP 8.4 + Ng
 - **Nginx 1.30**: Web server listening on port 8080 (non-privileged)
 - **PHP 8.4 + PHP-FPM**: Process manager with on-demand scaling (0-100 workers)
 - **Supervisord**: Process supervisor managing both services as PID 1
-- **Alpine Linux 3.24**: Minimal base OS (~40MB total image size)
+- **Alpine Linux 3.24**: Minimal base OS (image ~85MB compressed, ~230MB on disk)
 
 ### Process Communication Flow
 ```
@@ -35,7 +35,7 @@ Client → Nginx (port 8080) → PHP-FPM (Unix socket) → Response
 - **Health Monitoring**: `/fmp-ping` endpoint for container health checks
 
 ### Multi-Architecture Support
-The image supports AMD64, ARMv6, ARMv7, and ARM64 architectures through Docker Buildx.
+The image is published for AMD64 and ARM64 through Docker Buildx (ARMv6/ARMv7 dropped: Alpine 3.24 has no php84-pecl-swoole for 32-bit ARM).
 
 ### Enhanced Features
 
@@ -255,12 +255,12 @@ The `docs/` directory contains guides for common customizations:
 
 - `latest` tag: Auto-updated weekly with Alpine patches
 - Releases: Major/minor changes published with changelogs
-- Multi-platform: Supports AMD64, ARMv6, ARMv7, ARM64
+- Multi-platform: Supports AMD64 and ARM64
 
 ## Build and Deployment Guidelines
 
 ### Docker Hub Deployment
-- Always build for AMD64 architecture
+- Always build for AMD64 and ARM64 architectures
 - Upload image to Docker Hub at `drzippie/php-nginx`
 - Tag builds with:
   * `latest` tag for current version
