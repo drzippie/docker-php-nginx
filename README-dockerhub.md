@@ -11,7 +11,9 @@
 
 Production-ready PHP-FPM 8.4 & Nginx 1.30 container built on Alpine Linux with Node.js 24, Swoole, ImageMagick, APCu, and Redis support for enhanced caching capabilities.
 
-> **Security update (2026-10-21):** `latest` and `2026-10-21` ship **PHP 8.4.27**, which fixes the critical unauthenticated RCE vulnerabilities CVE-2026-109618 and CVE-2026-109619. All earlier tags (PHP 8.4.14 on Alpine 3.21) are vulnerable — pull the new image and recreate your containers.
+> **Security update (2026-10-25):** `latest` and `2026-10-25` ship **Brotli 1.2.1** and **Node.js 24.22.1**, which fix CVE-2026-111497 ("Node2Shell"), a critical out-of-bounds write in the Brotli decoder reachable by remote attackers through crafted `br`-compressed data (Node.js `fetch()`, PHP curl/Swoole clients, `brotli_uncompress()`, WOFF2 fonts in ImageMagick). Tag `2026-10-21` and all earlier tags ship the vulnerable Brotli 1.2.0 — pull the new image and recreate your containers.
+>
+> **Security update (2026-10-21):** PHP 8.4.27 fixes the critical unauthenticated RCE vulnerabilities CVE-2026-109618 and CVE-2026-109619. Tags before `2026-10-21` (PHP 8.4.14 on Alpine 3.21) are vulnerable.
 
 ## Features
 
@@ -247,7 +249,8 @@ For detailed configuration examples and advanced usage:
 
 | Tag | PHP | Alpine | Notes |
 |---|---|---|---|
-| `latest`, `2026-10-21` | 8.4.27 | 3.24 | Fixes CVE-2026-109618 / CVE-2026-109619 |
+| `latest`, `2026-10-25` | 8.4.27 | 3.24.3 | Fixes CVE-2026-111497 (Brotli 1.2.1, Node.js 24.22.1) |
+| `2026-10-21` | 8.4.27 | 3.24.2 | Fixes CVE-2026-109618 / CVE-2026-109619; vulnerable to CVE-2026-111497 |
 | `2026-07-18` | 8.4.14 | 3.21 | Vulnerable — do not use |
 
 Check the PHP version of any image with `docker run --rm drzippie/php-nginx php -v`.
